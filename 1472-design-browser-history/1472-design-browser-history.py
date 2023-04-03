@@ -8,7 +8,7 @@ class Node(object):
 
 class BrowserHistory(object):
     def __init__(self, homepage):
-        self.head = self.cur = Node(homepage)   # 여기서, head는 형식상 포인텅ㅇㅇㅇㅇ
+        self.head = self.cur = Node(homepage)   # 여기서, head는 형식상 포인터
     
     def visit(self, url):
         new_node = Node(url=url, prev=self.cur)
