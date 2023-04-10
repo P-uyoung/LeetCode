@@ -1,29 +1,17 @@
 class Solution:
     def longestConsecutive(self, nums: list) -> int:
-        count = 0
-        increase = []
-        decrease = []
-        
-        nums = list(set(nums))
-        nums.sort()
+        longest = 0
+        num_dic = {}
+        for v in nums:
+            num_dic[v] = True
         
         for v in nums:
-            if not increase or v-increase[-1] == 1:
-                increase.append(v)
-            
-            else:
-                count = max(count,len(increase))
-                increase = [v]
-            
-            if not decrease or decrease[-1]-v == 1:
-                decrease.append(v)
-                
-            else:
-                count = max(count,len(decrease))
-                decrease = [v]
-              
-        if increase and count < len(increase):
-            count = len(increase)
-        if decrease and count < len(decrease):
-            count = len(decrease)
-        return count 
+            prev = v-1
+            next = v+1
+            if prev not in num_dic:
+                count = 1
+                while next in num_dic:
+                    count += 1
+                    next += 1
+                longest = max(longest, count)
+        return longest
