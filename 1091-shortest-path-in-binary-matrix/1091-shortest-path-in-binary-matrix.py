@@ -6,27 +6,26 @@ class Solution:
         if n == 1:
             return 1
         
-        visited = [[False]*n for _ in range(n)]     # [[False]*n]*n 으로 하면 안됨. 이렇게 하면 2차원 배열의 각 행이 같은 메모리를 가리키게 됨.
-        # shortest = [[10001]*n for _ in range(n)]    # 마찬가지!
+        # shortest = [[10001]*n for _ in range(n)]  # BFS 먼저 도착한 게 최단거리임. shortest 필요 없음.
         dx = [0,0,1,-1,1,1,-1,-1]
         dy = [1,-1,0,0,1,-1,1,-1]
         q = deque()
-        visited[0][0] = True
+        grid[0][0] = 1                              # 방문 처리
         q.append((0,0,1))
         
         while q:
             x, y, dist = q.popleft()
-            for i in range(8):
+            for i in range(8):                      # 방문 예약
                 next_x = x + dx[i]
                 next_y = y + dy[i]
                 if next_x < 0 or next_x >= n or next_y < 0 or next_y >= n:
                     continue
-                if visited[next_y][next_x] == True or grid[next_y][next_x] == 1:
+                if grid[next_y][next_x] == 1:
                     continue
                 if next_x == n-1 and next_y == n-1:
                     return dist + 1
                 else:
-                    visited[next_y][next_x] = True
+                    grid[next_y][next_x] = 1
                     q.append((next_x, next_y, dist+1))
         
         return -1
