@@ -1,24 +1,25 @@
 class Solution:
     def maxSubArray(self, nums):
-        memo = {}  # 결과를 저장할 사전
+        memo = {}
         
         def solve(i, must_pick):
-            # 메모이제이션: 이미 계산된 결과가 있는지 확인
+            # memoization
             if (i, must_pick) in memo:
                 return memo[(i, must_pick)]
 
+            # right 인덱스를 결정함.
             if i >= len(nums):
-                return 0 if must_pick else float('-inf')
+                return 0 if must_pick else float('-inf')  # [1] 일 때, 1이 출력되어야함
             
-            # 현재 위치의 숫자를 선택하는 경우
+            # if must_pick == True인 경우는, 마지막부터 0까지 누적합 한 번 구한것임.
+            # if must_pick == Flase인 경우,
+            # i 인덱스를 넣으려면, i+1 인덱스부터의 누적합이여야하고,
+            # 넣지 않은 값과 비교한다.
+            
             pick = nums[i] + solve(i+1, True)
-            # 선택하지 않는 경우
-            not_pick = solve(i+1, False) if not must_pick else 0
+            not_pick = 0 if must_pick else solve(i+1, False)
             
-            # 최대값을 선택하여 메모에 저장
             memo[(i, must_pick)] = max(pick, not_pick)
-            # print(i, must_pick, memo[(i, must_pick)] )
-            # print(memo)
             return memo[(i, must_pick)]
 
         return solve(0, False)
