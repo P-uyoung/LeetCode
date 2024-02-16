@@ -1,8 +1,12 @@
 class Solution:
     def maxSubArray(self, nums):
         pre, suf = [*nums], [*nums]
-        for i in range(1, len(nums)):       pre[i] += max(0, pre[i-1])
-        for i in range(len(nums)-2,-1,-1):  suf[i] += max(0, suf[i+1])
+        for i in range(1, len(nums)):       
+            pre[i] += max(0, pre[i-1])
+        print(pre)
+        for i in range(len(nums)-2,-1,-1):  
+            suf[i] += max(0, suf[i+1])
+        print(suf)
         def maxSubArray(A, L, R):
             if L == R: return A[L]
             mid = (L + R) // 2
